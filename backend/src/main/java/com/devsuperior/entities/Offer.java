@@ -100,10 +100,6 @@ public class Offer implements Serializable {
 		return topics;
 	}
 
-	public void setTopics(List<Topic> topics) {
-		this.topics = topics;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
