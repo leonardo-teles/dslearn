@@ -48,6 +48,9 @@ public abstract class Lesson implements Serializable {
 	
 	@OneToMany(mappedBy = "lesson")
 	private List<Deliver> delivers = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "lesson")
+	private List<Topic> topics = new ArrayList<>();
 
 	public Lesson() {}
 
@@ -100,6 +103,14 @@ public abstract class Lesson implements Serializable {
 
 	public void setDelivers(List<Deliver> delivers) {
 		this.delivers = delivers;
+	}
+	
+	public List<Topic> getTopics() {
+		return topics;
+	}
+
+	public void setTopics(List<Topic> topics) {
+		this.topics = topics;
 	}
 
 	@Override

@@ -40,6 +40,9 @@ public class User implements Serializable {
 	
 	@OneToMany(mappedBy = "user")
 	private List<Notification> notifications = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "author")
+	private List<Topic> topics = new ArrayList<>();
 
 	public User() {}
 
@@ -92,6 +95,14 @@ public class User implements Serializable {
 
 	public void setNotifications(List<Notification> notifications) {
 		this.notifications = notifications;
+	}
+	
+	public List<Topic> getTopics() {
+		return topics;
+	}
+
+	public void setTopics(List<Topic> topics) {
+		this.topics = topics;
 	}
 
 	@Override
