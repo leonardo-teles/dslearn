@@ -20,6 +20,7 @@ public class Notification implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String text;
 
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
