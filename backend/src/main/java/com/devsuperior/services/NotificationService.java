@@ -2,6 +2,8 @@ package com.devsuperior.services;
 
 import java.time.Instant;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,16 +14,25 @@ import com.devsuperior.dto.NotificationDTO;
 import com.devsuperior.entities.Deliver;
 import com.devsuperior.entities.Notification;
 import com.devsuperior.entities.User;
+import com.devsuperior.observer.DeliverRevisionObserver;
 import com.devsuperior.repositories.NotificationRepository;
 
 @Service
-public class NotificationService {
+public class NotificationService implements DeliverRevisionObserver {
 
 	@Autowired
 	private NotificationRepository repository;
 	
 	@Autowired
 	private AuthService authService;
+	
+	@Autowired
+	private DeliverService deliverService;
+	
+	@PostConstruct
+	private void initialize() {
+		deliverService.subscribeDeliverRevisionObserver(this);
+	}
 	
 	@Transactional(readOnly = true)
 	public Page<NotificationDTO> notificationsForCurrentUser(boolean unreadOnly, Pageable pageable) {
@@ -46,5 +57,10 @@ public class NotificationService {
 		Notification notification = new Notification(null, text, moment, false, route, user);
 		
 		repository.save(notification);
+	}
+
+	@Override
+	public void onSaveRevision(Deliver deliver) {
+		saveDeliverNotification(deliver);
 	}
 }
